@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo app</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <div class="todo-app">
+        <h1>Todo List</h1>
+        <h3>Stay organized and get things done!</h3>
+        <!-- Header / Counters -->
+        <div class="todo-header">
+            <div class=" counter total">
+                <p class="total-amount">0</p>
+                <p class="">Total Task</p>
+            </div>
+            <div class="counter completed">
+                <p class="completed-amount">0</p>
+                <p class="">Completed</p>
+            </div>
+            <div class="counter pending">
+                <p class="pending-amount">0</p>
+                <p class="">Pending</p>
+            </div>
+        </div>
+        <!-- Add Task -->
+        <div class="todo-add">
+
+            <button class="add-task-btn">+ Add New Task</button>
+        </div>
+        <!-- Tabs -->
+        <div class="todo-tabs">
+            <button data-tab="all" class="active">All</button>
+            <button data-tab="pending">Pending</button>
+            <button data-tab="completed">Completed</button>
+        </div>
+        <!-- Tasks -->
+        <div class="task-list">
+            <ul>
+            </ul>
+        </div>
+    </div>
+    <div class="modal" id="taskModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>Add New Task</h4>
+                <span class="close-modal">&times;</span>
+            </div>
+            <input type="text" id="task-title" placeholder="Task title">
+            <textarea id="task-description" placeholder="Task description (optinal)"></textarea>
+            <div class="task-btns">
+                <button id="add-task-btn">Add Task</button>
+                <button id="cancel-task-btn">Cancel</button></div>
+        </div>
+
+    </div>
+    <script src="./script.js"></script>
+</body>
+
+</html>
