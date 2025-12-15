@@ -161,13 +161,16 @@ body {
     color: white;
     font-size: 14px;
 }
+
 .task-item.completed .task-desc {
     color: #888;
 }
-.task-item.completed .task-title{
+
+.task-item.completed .task-title {
     text-decoration: line-through;
-      color: #888;
+    color: #888;
 }
+
 .task-info {
     flex: 1;
     text-align: left;
@@ -184,7 +187,7 @@ body {
     color: #ddd;
 }
 
-.task-date{
+.task-date {
     font-size: 0.7rem;
     color: #888;
     display: inline;
@@ -216,11 +219,12 @@ body {
     opacity: 0.7;
 }
 
-.action-btn.disabled{
+.action-btn.disabled {
     opacity: 0.4;
     cursor: not-allowed;
 }
-.action-btn.disabled svg{
+
+.action-btn.disabled svg {
     pointer-events: none;
 }
 
