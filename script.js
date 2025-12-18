@@ -13,6 +13,7 @@ const pendingEl = document.querySelector('.pending-amount');
 
 let tasks = [];
 let activeTab = 'all';
+let editingTask = null;
 
 // Load & Save tasks
 function loadTasks() {
@@ -28,7 +29,8 @@ function saveTasks() {
 openModalBtn.addEventListener('click', () => {
     modal.style.display = "block";
     title.classList.remove('input-error');
-    resetAddButton();
+    addTaskBtn.textContent = "Add Task";
+    editingTask = null;
 })
 
 function closeModalWindow() {
@@ -36,7 +38,7 @@ function closeModalWindow() {
     title.value = '';
     desc.value = '';
     title.classList.remove('input-error');
-    resetAddButton();
+    editingTask = null;
 }
 closeModal.addEventListener('click', closeModalWindow);
 cancelModal.addEventListener('click', closeModalWindow);
@@ -45,7 +47,7 @@ window.addEventListener('click', (e) => {
 })
 
 // Add new task
-function addNewTask() {
+function addOrEditTask() {
     if (title.value.trim() === '') {
         title.classList.add('input-error');
         title.focus();
@@ -54,41 +56,27 @@ function addNewTask() {
     title.classList.remove('input-error');
 
     const now = new Date().toLocaleDateString();
-    const newTask = {
-        id: Date.now(),
-        title: title.value,
-        desc: desc.value,
-        createdAt: now,
-        updatedAt: null,
-        completed: false
+    if (editingTask) {
+        editingTask.title = title.value;
+        editingTask.desc = desc.value;
+        editingTask.updatedAt = now;
+    } else {
+        const newTask = {
+            id: Date.now(),
+            title: title.value,
+            desc: desc.value,
+            createdAt: now,
+            updatedAt: null,
+            completed: false
+        }
+        tasks.push(newTask);
     }
-    tasks.push(newTask);
+
     saveTasks();
     renderTasksByTab(activeTab);
     closeModalWindow();
 }
-addTaskBtn.onclick = addNewTask;
-
-function resetAddButton() {
-    addTaskBtn.onclick = addNewTask;
-}
-
-// Handle task edit 
-function handleEditTask(task) {
-    if (title.value.trim() === '') {
-        title.classList.add('input-error');
-        title.focus();
-        return;
-    }
-    title.classList.remove('input-error');
-
-    task.title = title.value;
-    task.desc = desc.value;
-    task.updatedAt = new Date().toLocaleDateString();
-    saveTasks();
-    renderTasksByTab(activeTab);
-    closeModalWindow();
-}
+addTaskBtn.addEventListener('click', addOrEditTask);
 
 // Create action button (Edit/Delete) with SVG paths
 function createActionBtn(type, ariaLabel, paths) {
@@ -182,7 +170,8 @@ function renderTask(task) {
         modal.style.display = 'block';
         title.value = task.title;
         desc.value = task.desc;
-        addTaskBtn.onclick = () => handleEditTask(task);
+        addTaskBtn.textContent = "Save Changes";
+        editingTask = task;
     })
 
     deleteBtn.addEventListener('click', () => {
@@ -193,7 +182,7 @@ function renderTask(task) {
 
     actions.append(editBtn, deleteBtn);
     li.append(circle, info, actions);
-    taskList.appendChild(li);
+    taskList.prepend(li);
 }
 
 // Update counters
