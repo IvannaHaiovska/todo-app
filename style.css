@@ -269,7 +269,10 @@ body {
 
 /* Modal */
 .modal {
-    display: none;
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.95);
+    transform: opacity 0.25s ease, transform 0.25s ease;
     position: fixed;
     z-index: 100;
     left: 0;
@@ -279,6 +282,12 @@ body {
     overflow: auto;
     background: rgba(1, 6, 2, 0.829);
     backdrop-filter: blur(8px);
+}
+
+.modal.show{
+    opacity: 1;
+    pointer-events: auto;
+    transform: scale(1);
 }
 
 /* Modal content box */

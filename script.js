@@ -26,22 +26,24 @@ function saveTasks() {
 }
 
 // Modal open/close
-openModalBtn.addEventListener('click', () => {
-    modal.style.display = "block";
+function openModalWindow () {
+    modal.classList.add('show');
     title.value = '';
     desc.value = '';
     title.classList.remove('input-error');
     addTaskBtn.textContent = "Add Task";
     editingTask = null;
-})
+}
 
 function closeModalWindow() {
-    modal.style.display = "none";
+    modal.classList.remove('show');
     title.classList.remove('input-error');
     title.value = '';
     desc.value = '';
     editingTask = null;
 }
+
+openModalBtn.addEventListener('click', openModalWindow);
 closeModal.addEventListener('click', closeModalWindow);
 cancelModal.addEventListener('click', closeModalWindow);
 window.addEventListener('click', (e) => {
@@ -208,7 +210,7 @@ function toggleCompleted(id) {
 }
 
 function startEditTask(task) {
-    modal.style.display = 'block';
+    modal.classList.add('show');
     title.value = task.title;
     desc.value = task.desc;
     addTaskBtn.textContent = "Save Changes";
