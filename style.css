@@ -191,12 +191,6 @@ body {
     text-decoration: line-through;
 }
 
-/* New task animation */
-.task-item.task-new {
-    opacity: 0;
-    transform: translateY(-8px);
-}
-
 .task-item {
     transition: opacity 0.25s ease, transform 0.25s ease;
 }
@@ -262,6 +256,15 @@ body {
 
 .action-btn.disabled svg {
     pointer-events: none;
+}
+
+.task-enter{
+    opacity:0;
+    transform: translateY(-8px);
+}
+.task-exit{
+     opacity:0;
+     transform: translateY(8px);
 }
 
 /* Modal */

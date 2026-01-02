@@ -73,10 +73,10 @@ function createTaskElement(task, isNew = false) {
 
     const datesEl = document.createElement('div');
     datesEl.className = 'task-date';
-    //  datesEl.textContent = `Created: ${task.createdAt}`;
-    //  if (task.updatedAt) {
-    //      datesEl.textContent += ` • Updated: ${task.updatedAt}`;
-    //  }
+    datesEl.textContent = `Created: ${task.createdAt}`;
+    if (task.updatedAt) {
+         datesEl.textContent += ` • Updated: ${task.updatedAt}`;
+    }
 
     info.append(titleEl, document.createElement('br'), descEl, document.createElement('br'), datesEl);
 
@@ -107,13 +107,6 @@ function createTaskElement(task, isNew = false) {
     actions.append(editBtn, deleteBtn);
     li.append(circle, info, actions);
 
-    // New task animation
-    if (isNew) {
-        li.classList.add('task-new');
-        requestAnimationFrame(() => li.classList.remove('task-new'));
-    }
-
-    // updateTaskUI(task);
     return li;
 }
 
@@ -225,10 +218,14 @@ function startEditTask(task) {
 function deleteTask(id) {
     tasks = tasks.filter(t => t.id !== id);
     const li = taskList.querySelector(`[data-id="${id}"]`);
-    if (li) li.remove();
+    if (!li) return;
+    li.classList.add('task-exit');
+    setTimeout(() => {
+        li.remove();
+        updateEmptyState();
+    }, 250);
     saveTasks();
     updateCounters();
-    updateEmptyState();
 }
 
 // Add/Edit new task
@@ -257,9 +254,12 @@ addTaskBtn.addEventListener('click', () => {
             completed: false
         }
         tasks.unshift(newTask);
-        const li = createTaskElement(newTask, true);
+        const li = createTaskElement(newTask);
         attachTaskEvents(li, newTask);
+        li.classList.add('task-enter');
         taskList.prepend(li);
+        li.offsetHeight;
+        li.classList.remove('task-enter');
         updateTaskUI(newTask);
     }
 
