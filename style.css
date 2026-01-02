@@ -5,7 +5,7 @@
     box-sizing: border-box;
 }
 
-/* Body styles with gradient background */
+/* Body styles*/
 body {
     background: linear-gradient(135deg, #1a1823, #1a003d);
     color: #fff;
@@ -22,7 +22,7 @@ body {
     width: 100%;
     max-width: 600px;
     background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px); /* Glassmorphism effect */
     border-radius: 16px;
     padding: 30px 40px;
     box-shadow: 0 8px 30px #00000080;
@@ -44,7 +44,7 @@ body {
     text-align: center;
 }
 
-/* Counters container */
+/* Counters */
 .todo-header {
     display: flex;
     justify-content: space-between;
@@ -52,7 +52,6 @@ body {
     gap: 10px;
 }
 
-/* Counter boxes */
 .counter {
     flex: 1;
     background: rgba(255, 255, 255, 0.05);
@@ -104,7 +103,7 @@ body {
     box-shadow: 0 0 12px rgba(102, 255, 120, 0.6);
 }
 
-/* Tabs for filtering tasks */
+/* Tabs */
 .todo-tabs {
     display: flex;
     justify-content: center;
@@ -134,7 +133,7 @@ body {
 }
 
 .task-item {
-    display: flex;
+    display: flex; /* Circle + info +actions in a row*/
     align-items: flex-start;
     justify-content: space-between;
     gap: 10px;
@@ -144,10 +143,10 @@ body {
     border-radius: 10px;
     cursor: pointer;
     transition: all 0.3s ease;
-    
+
 }
 
-/*Circle for task completion */
+/* Task completion circle */
 .task-circle {
     width: 20px;
     height: 20px;
@@ -181,7 +180,7 @@ body {
     font-size: 14px;
 }
 
-/* Completed tasks styles */
+/* Completed tasks */
 .task-item.completed .task-desc,
 .task-item.completed .task-title {
     color: #888;
@@ -191,13 +190,8 @@ body {
     text-decoration: line-through;
 }
 
-.task-item {
-    transition: opacity 0.25s ease, transform 0.25s ease;
-}
-
-/* Task info container */
 .task-info {
-    flex: 1;
+    flex: 1; /*Fill space between circle and actions */
     text-align: left;
     cursor: pointer;
 }
@@ -226,6 +220,7 @@ body {
     margin-top: 10px;
 }
 
+/* Buttons inside tasks */
 .action-btn {
     background: none;
     border: none;
@@ -258,13 +253,15 @@ body {
     pointer-events: none;
 }
 
-.task-enter{
-    opacity:0;
+/* Task enter/exit animations */
+.task-enter {
+    opacity: 0;
     transform: translateY(-8px);
 }
-.task-exit{
-     opacity:0;
-     transform: translateY(8px);
+
+.task-exit {
+    opacity: 0;
+    transform: translateY(8px);
 }
 
 /* Modal */
@@ -284,7 +281,7 @@ body {
     backdrop-filter: blur(8px);
 }
 
-.modal.show{
+.modal.show {
     opacity: 1;
     pointer-events: auto;
     transform: scale(1);
@@ -299,12 +296,11 @@ body {
     max-width: 500px;
     color: #fff;
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* Stack inputs + buttons */
     gap: 15px;
     animation: fadeIn 0.3s ease;
 }
 
-/* Modal header with close button */
 .modal-content .modal-header {
     display: flex;
     justify-content: space-between;
@@ -342,38 +338,38 @@ body {
     cursor: pointer;
 }
 
-.modal-content #add-task-btn {
+#add-task-btn {
     background-color: #52b44a;
     width: 48%;
 }
 
-.modal-content #add-task-btn:hover,
-.modal-content #add-task-btn:focus {
+#add-task-btn:hover,
+#add-task-btn:focus {
     background-color: #35712d;
     transform: translateY(-1px) scale(1.02);
     box-shadow: 0 0 10px rgba(102, 255, 120, 0.5);
     outline: none;
 }
 
-.modal-content #cancel-task-btn {
+#cancel-task-btn {
     background-color: #595d69;
     width: 48%;
 }
 
-.modal-content #cancel-task-btn:hover,
-.modal-content #cancel-task-btn:focus {
+#cancel-task-btn:hover,
+#cancel-task-btn:focus {
     background-color: #444;
     transform: translateY(-1px) scale(1.02);
     box-shadow: 0 0 8px rgba(150, 150, 150, 0.5);
     outline: none;
 }
 
-/* Highlight input error */
+/* Input error highlight */
 .input-error {
     outline: 2px solid rgba(245, 85, 85, 0.6);
 }
 
-/* Fade-in animation keyframes */
+/* Fade-in animation */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -386,23 +382,87 @@ body {
     }
 }
 
+
 /* Responsive design */
 @media (max-width: 600px) {
     .todo-app {
-        padding: 20px;
+        padding: 15px 10px;
     }
 
     .todo-header {
         flex-direction: column;
-        gap: 15px;
-    }
-
-    .task-item {
-        flex-direction: column;
         gap: 10px;
     }
 
-    .todo-tabs {
+    .counter {
+        padding: 12px;
+        font-size: 0.9rem;
+    }
+
+    .todo-tabs{
+        display: flex;
         flex-wrap: wrap;
+        gap: 5px;
+    }
+
+    .todo-tabs button{
+        flex: 1 1 calc(33% - 10px);
+    }
+
+    .task-item {
+        flex-wrap: wrap; /*Stack elements if not enough space */
+        gap: 6px;
+        padding: 10px;
+    }
+
+    .task-circle {
+        width: 24px;
+        height: 24px;
+    }
+    .task-circle.completed::after{
+        font-size: 16px;
+        transition: all 0.2s ease;
+    }
+
+    .task-title,
+    .task-reak-desc{
+        word-break: break-word; /* Prevent overflow */
+    }
+
+    .task-actions {
+        flex: 1 1 100%; /* Full width actions for mobile */
+        justify-content: flex-end;
+        gap: 10px;
+        margin-top: 6px;
+    }
+
+    .action-btn {
+        padding: 6px;
+    }
+
+    .action-btn svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .todo-tabs button {
+        padding: 8px 12px;
+        margin: 3px;
+        font-size: 0.85rem;
+    }
+
+    .modal-content {
+        margin: 10vh 10px;
+        padding: 20px;
+    }
+
+    .modal-content input,
+    .modal-content textarea {
+        font-size: 0.9rem;
+    }
+
+    .add-task-btn {
+        padding: 10px 16px;
+        font-size: 0.9rem;
     }
 }
