@@ -59,12 +59,6 @@ function createTaskElement(task, isNew = false) {
     circle.className = 'task-circle';
     circle.setAttribute('role', 'button');
     circle.setAttribute('tabindex', '0');
-    circle.addEventListener('click', () => {
-        toggleCompleted(task.id);
-    });
-    circle.addEventListener('keydown', e => {
-        if (e.key === 'Enter') circle.click();
-    });
 
     // Task info
     const info = document.createElement('div');
@@ -79,10 +73,10 @@ function createTaskElement(task, isNew = false) {
 
     const datesEl = document.createElement('div');
     datesEl.className = 'task-date';
-     datesEl.textContent = `Created: ${task.createdAt}`;
-     if (task.updatedAt) {
-         datesEl.textContent += ` • Updated: ${task.updatedAt}`;
-     }
+    //  datesEl.textContent = `Created: ${task.createdAt}`;
+    //  if (task.updatedAt) {
+    //      datesEl.textContent += ` • Updated: ${task.updatedAt}`;
+    //  }
 
     info.append(titleEl, document.createElement('br'), descEl, document.createElement('br'), datesEl);
 
@@ -110,10 +104,6 @@ function createTaskElement(task, isNew = false) {
         }
     ])
 
-
-    editBtn.addEventListener('click', () => startEditTask(task))
-    deleteBtn.addEventListener('click', () => deleteTask(task.id));
-
     actions.append(editBtn, deleteBtn);
     li.append(circle, info, actions);
 
@@ -123,10 +113,26 @@ function createTaskElement(task, isNew = false) {
         requestAnimationFrame(() => li.classList.remove('task-new'));
     }
 
-    updateTaskUI(task);
+    // updateTaskUI(task);
     return li;
 }
 
+function attachTaskEvents(li, task){
+    const circle = li.querySelector('.task-circle');
+    const editBtn = li.querySelector('.action-btn.edit');
+    const deleteBtn = li.querySelector('.action-btn.delete');
+
+    circle.addEventListener('click', () => {
+        toggleCompleted(task.id);
+    });
+    circle.addEventListener('keydown', e => {
+        if (e.key === 'Enter') circle.click();
+    });
+
+    editBtn.addEventListener('click', () => startEditTask(task))
+    deleteBtn.addEventListener('click', () => deleteTask(task.id));
+
+}
 // Create action button (Edit/Delete) with SVG paths
 function createActionBtn(type, ariaLabel, paths) {
     const btn = document.createElement('button');
@@ -151,7 +157,7 @@ function createActionBtn(type, ariaLabel, paths) {
 
 /* UI Updates */
 function updateTaskUI(task) {
-    const li = taskList.querySelector(`li[data-id="${task.id}"]`);
+    const li = taskList.querySelector(`[data-id="${task.id}"]`);
     if (!li) return;
 
     li.querySelector('.task-title').textContent = task.title;
@@ -252,7 +258,9 @@ addTaskBtn.addEventListener('click', () => {
         }
         tasks.unshift(newTask);
         const li = createTaskElement(newTask, true);
+        attachTaskEvents(li, newTask);
         taskList.prepend(li);
+        updateTaskUI(newTask);
     }
 
     saveTasks();
@@ -304,7 +312,10 @@ tabs.forEach(tab => {
 // Initial load
 loadTasks();
 tasks.forEach(task => {
-    taskList.append(createTaskElement(task));
+    const li = createTaskElement(task);
+    attachTaskEvents(li, task);
+    taskList.append(li);
+    updateTaskUI(task);
 });
 updateCounters();
 applyTabFilter();
