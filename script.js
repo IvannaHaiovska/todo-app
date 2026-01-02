@@ -199,9 +199,13 @@ function toggleCompleted(id) {
     task.completed = !task.completed;
     saveTasks();
     updateTaskUI(task);
-    applyTabFilter();
     updateCounters();
-    updateEmptyState();
+    if(activeTab !== 'all'){
+        applyTabFilter();
+    }
+    else{
+       updateEmptyState(); 
+    }
 }
 
 function startEditTask(task) {
